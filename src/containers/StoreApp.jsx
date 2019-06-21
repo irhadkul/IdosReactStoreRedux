@@ -2,6 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { HeaderContainer as Header } from "./Header";
 import { BodyContainer as Body } from "./Body";
+import CartItem from "../components/smart/CartItem";
 import { addToCart, removeFromCart } from "../redux/actions/miniCart";
 import "./StoreApp.scss";
 
@@ -16,15 +17,13 @@ class StoreApp extends React.Component {
     };
   }
   renderCartItems(cartItems) {
-    return cartItems.map((element, i) => {
+    return cartItems.map((element, index) => {
       return (
-        <li key={i} onClick={() => this.removeItemsFromCart(element.id)}>
-          <img
-            src={"https://picsum.photos/id/" + element.id + "/100/200"}
-            alt=""
-          />{" "}
-          id:{element.id} item:{element.item}
-        </li>
+        <CartItem
+          element={element}
+          key={index}
+          removeItem={() => this.removeItemsFromCart(element.id)}
+        />
       );
     });
   }
