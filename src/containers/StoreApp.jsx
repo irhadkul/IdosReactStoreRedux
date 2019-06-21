@@ -5,35 +5,41 @@ import { BodyContainer as Body } from "./Body";
 import { addToCart, removeFromCart } from "../redux/actions/miniCart";
 import "./StoreApp.scss";
 
-function StoreApp(props) {
-  const addRandomItemToCart = (id, item) => {
-    props.addToCart(id, item);
-  };
-  const removeItemsFromCart = id => {
-    props.removeFromCart(id);
-  };
-  return (
-    <div className="baseContainer">
-      {" "}
-      <ul>{everyCartItem(props, removeItemsFromCart)}</ul>
-      <Header cartCount={props.cartItems} />
-      <Body onClick={(id, item) => addRandomItemToCart(id, item)} />
-    </div>
-  );
-}
-
-function everyCartItem(props, removeItemsFromCart) {
-  return props.cartItems.map((element, i) => {
+class StoreApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.addRandomItemToCart = (id, item) => {
+      this.props.addToCart(id, item);
+    };
+    this.removeItemsFromCart = id => {
+      this.props.removeFromCart(id);
+    };
+  }
+  renderCartItems(cartItems) {
+    return cartItems.map((element, i) => {
+      return (
+        <li key={i} onClick={() => this.removeItemsFromCart(element.id)}>
+          <img
+            src={"https://picsum.photos/id/" + element.id + "/100/200"}
+            alt=""
+          />{" "}
+          id:{element.id} item:{element.item}
+        </li>
+      );
+    });
+  }
+  render() {
     return (
-      <li key={i} onClick={() => removeItemsFromCart(element.id)}>
-        <img
-          src={"https://picsum.photos/id/" + element.id + "/100/200"}
-          alt=""
-        />{" "}
-        id:{element.id} item:{element.item}
-      </li>
+      <div className="baseContainer">
+        {" "}
+        <Header cartCount={this.props.cartItems} />
+        <Body
+          cartItems={this.renderCartItems(this.props.cartItems)}
+          onClick={this.addRandomItemToCart.bind(this)}
+        />
+      </div>
     );
-  });
+  }
 }
 
 const mapStateToProps = state => {

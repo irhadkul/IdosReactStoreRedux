@@ -2,22 +2,26 @@ import * as React from "react";
 export class BodyContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.idCount = 0;
+    this.state = {
+      idCount: 0
+    };
   }
   render() {
     return (
       <main className="main">
-        {" "}
-        I am Store body{" "}
-        <div
+        <p>I am Store body</p>
+        <button
+          className="btn btn--gold"
           onClick={() => {
-            this.props.onClick(this.idCount, this.randomItem());
-            this.idCount += 1;
+            this.props.onClick(this.state.idCount, this.randomItem());
+            this.setState({ idCount: this.state.idCount + 1 });
           }}
         >
-          {" "}
-          click me
-        </div>{" "}
+          Add random item to cart
+        </button>
+        <div className="mainScroller">
+          <ul>{this.props.cartItems}</ul>
+        </div>
       </main>
     );
   }
