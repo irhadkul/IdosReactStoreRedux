@@ -6,7 +6,7 @@ export default class CartItem extends React.Component {
     return (
       <li>
         {/* get random images */}
-        <NavLink to={"/" + this.props.element.id}>
+        <NavLink to={"/item/" + this.props.element.id}>
           <img
             src={
               "https://picsum.photos/id/" + this.props.element.id + "/100/200"

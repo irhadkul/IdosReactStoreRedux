@@ -38,7 +38,7 @@ export class BodyContainer extends React.Component {
                 />
               );
             }}
-            path={"/:id"}
+            path={"/item/:id"}
           />
         </Switch>
       </Router>
